@@ -22,7 +22,10 @@ export class ProdutosRepositoryTypeorm extends ProdutosRepository {
   }
 
   findAll(empresaId: string): Promise<Produto[]> {
-    return this.repo.find({ where: { empresaId } });
+    return this.repo.find({ 
+      where: { empresa: { id: empresaId } },
+      relations: ['empresa']
+    });
   }
 
   findOne(id: string): Promise<Produto | null> {

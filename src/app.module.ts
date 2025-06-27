@@ -1,8 +1,13 @@
-import { AuthModule } from '@modules/auth/auth.module';
-import { UserModule } from '@modules/users/user.module';
+//import { AuthModule } from '@modules/auth/auth.module';
+import { Empresa } from '@modules/empresas/entities/empresa-pg.entity';
+import { Produto } from '@modules/produtos/entities/produto-pg.entity';
+import { ProdutosModule } from '@modules/produtos/produtos.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { MongooseModule } from '@nestjs/mongoose';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
+import { EmpresasModule } from './modules/empresas/empresas.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot(
@@ -10,13 +15,18 @@ import { MongooseModule } from '@nestjs/mongoose';
         isGlobal: true,
       },
     ),
-    MongooseModule.forRootAsync({
-      useFactory: () => ({
-        uri: process.env.MONGO_URL,
-      }),
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: process.env.DB_HOST || 'localhost',
+      port: Number(process.env.DB_PORT) || 5432,
+      username: process.env.DB_USER || 'postgres',
+      password: process.env.DB_PASSWORD || 'postgres',
+      database: process.env.DB_NAME || 'postgres',
+      entities: [Produto, Empresa],
+      synchronize: true,
     }),
-    AuthModule,
-    UserModule,
+    ProdutosModule,
+    EmpresasModule,
   ],
   controllers: [],
   providers: [],

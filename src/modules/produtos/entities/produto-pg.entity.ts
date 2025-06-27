@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Empresa } from '@modules/empresas/entities/empresa-pg.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 
 @Entity('produtos')
 export class Produto {
@@ -11,7 +12,9 @@ export class Produto {
   @Column('decimal')
   price: number;
 
-  @Column('varchar')
-  empresaId: string;
+
+  @ManyToOne(() => Empresa, empresa => empresa.produtos)
+  @JoinColumn({ name: 'empresaId' })
+  empresa: Empresa;
 
 }
