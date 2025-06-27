@@ -28,5 +28,9 @@ import { UpdateEmpresaUseCase } from './usecases/update-empresa.usecase';
     FindOneEmpresaUseCase,
     
   ],
+  exports: [
+    FindOneEmpresaUseCase, // Exportando para ser usado em outros módulos
+    EmpresasRepository, // Exportando o repository também
+  ],
 })
 export class EmpresasModule {}

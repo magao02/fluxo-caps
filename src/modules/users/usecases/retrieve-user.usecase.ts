@@ -1,5 +1,3 @@
-import { UUID } from 'crypto';
-
 import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { User } from '../interfaces/user.interface';
@@ -9,7 +7,7 @@ import { UsersRepository } from '../repositories/users.repository';
 export class RetrieveUserUsecase {
   constructor(private readonly userRepository: UsersRepository) { }
 
-  async execute(id: UUID): Promise<User> {
+  async execute(id: string): Promise<User> {
     const user = await this.userRepository.findOne(id);
     const isDeleted = user?.isDeleted;
 

@@ -1,4 +1,4 @@
-import { UUID, randomUUID } from 'crypto';
+import { UUID } from 'crypto';
 
 import {
   Body,
@@ -11,18 +11,18 @@ import {
   Post,
   UsePipes,
   ValidationPipe,
-  UseGuards,
+
 } from '@nestjs/common';
 import { ApiResponse, getSchemaPath } from '@nestjs/swagger';
 
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+
 
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './interfaces/user.interface';
 import { UsersService } from './users.service';
 @Controller('users')
-@UseGuards(JwtAuthGuard)
+
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
@@ -48,7 +48,7 @@ export class UsersController {
       $ref: getSchemaPath(CreateUserDto),
     },
   })
-  async findOne(@Param('id') id: UUID) {
+  async findOne(@Param('id') id: string) {
     return this.usersService.findOne(id);
   }
 
@@ -68,13 +68,7 @@ export class UsersController {
   )
   async create(@Body() createUserDto: CreateUserDto): Promise<User> {
 
-    const newUser = {
-      ...createUserDto,
-      id: randomUUID(),
-      isDeleted: false,
-    }
-
-    return this.usersService.create(newUser);
+    return this.usersService.create(createUserDto);
   }
 
   @Patch(':id')

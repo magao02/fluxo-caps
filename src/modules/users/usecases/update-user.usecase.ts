@@ -1,4 +1,3 @@
-import { UUID } from 'crypto';
 
 import { Injectable } from '@nestjs/common';
 
@@ -9,7 +8,7 @@ import { UsersRepository } from '../repositories/users.repository';
 export class UpdateUserUsecase {
   constructor(private readonly userRepository: UsersRepository) { }
 
-  async execute(id: UUID, newUserData: Partial<User>): Promise<User> {
+  async execute(id: string, newUserData: Partial<User>): Promise<User> {
     return this.userRepository.update(id, newUserData);
   }
 }

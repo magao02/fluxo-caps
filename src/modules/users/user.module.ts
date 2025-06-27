@@ -1,9 +1,9 @@
-import { AuthModule } from '@modules/auth/auth.module';
-import { MongooseUsersRepository } from '@modules/users/repositories/users-mongoose.repository';
+import { EmpresasModule } from '@modules/empresas/empresas.module';
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { User as UserMongo, UserMongoSchema } from './repositories/user-mongo.schema';
+import { User } from './entities/user-pg.entity';
+import { UsersRepositoryTypeorm } from './repositories/users-pg.repository';
 import { UsersRepository } from './repositories/users.repository';
 import {
   CreateUserUsecase,
@@ -17,10 +17,10 @@ import { UsersService } from './users.service';
 
 @Module({
   imports: [
-    AuthModule,
-    MongooseModule.forFeature([
-      { name: UserMongo.name, schema: UserMongoSchema },
-    ]),
+    // AuthModule,
+    EmpresasModule, // Importando o módulo de empresas
+    TypeOrmModule.forFeature([User]) // Usando a entidade User correta
+    
   ],
   controllers: [UsersController],
   providers: [
@@ -30,10 +30,11 @@ import { UsersService } from './users.service';
     RetrieveUserUsecase,
     UpdateUserUsecase,
     RemoveUserUsecase,
+    // FindOneEmpresaUseCase será injetado através do EmpresasModule
     {
       provide: UsersRepository,
-      useClass: MongooseUsersRepository,
-    },
+      useClass: UsersRepositoryTypeorm,
+    }
   ],
 })
 export class UserModule { }

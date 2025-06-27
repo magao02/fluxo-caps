@@ -1,21 +1,19 @@
-import { UUID } from 'crypto';
-
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsBoolean,
   IsEmail,
-  IsInt,
   IsString,
-  IsUUID,
   Length,
-  Max,
-  Min,
   IsOptional
 } from 'class-validator';
 
-import { User } from '../interfaces/user.interface';
 
-export class CreateUserDto implements User {
+
+export class CreateUserDto {
+  
+  @IsString()
+  empresaId: string;
+  
   @ApiProperty({
     example: 'John Doe',
     description: 'The name of the User',
@@ -39,25 +37,19 @@ export class CreateUserDto implements User {
   @IsEmail()
   email: string;
 
-  @ApiProperty({
-    example: 18,
-    description: 'The age of the User',
-    required: true,
-    type: Number,
-    format: 'number',
-    minimum: 18,
-    maximum: 100,
-  })
-  @IsInt()
-  @Min(18)
-  @Max(100)
-  age: number;
-
-  @IsOptional()
-  @IsUUID()
-  id: UUID;
-
   @IsOptional()
   @IsBoolean()
   isDeleted: boolean;
+
+  @ApiProperty({
+    example: 'password123',
+    description: 'The password of the User',
+    required: true,
+    type: String,
+    format: 'string',
+    minLength: 6,
+  })
+  @IsString()
+  @Length(6, 100)
+  password: string;
 }
