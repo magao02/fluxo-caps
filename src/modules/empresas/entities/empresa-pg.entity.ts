@@ -1,5 +1,6 @@
 import { Produto } from '@modules/produtos/entities/produto-pg.entity';
 import { User } from '@modules/users/entities/user-pg.entity';
+import { Venda } from '@modules/vendas/entities/venda.entity-pg';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity('empresas')
@@ -39,4 +40,7 @@ export class Empresa {
 
   @OneToMany(() => User, user => user.empresa)
   users: User[];
+
+  @OneToMany(() => Venda, venda => venda.empresa)
+  vendas: Venda[];
  }

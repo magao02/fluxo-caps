@@ -26,6 +26,10 @@ import { UpdateProdutoUseCase } from './usecases/update-produto.usecase';
     FindAllProdutosUseCase,
     FindOneProdutoUseCase,
     UpdateProdutoUseCase,
-   ],
+  ],
+  exports: [
+    FindOneProdutoUseCase, // Exportando para ser usado em outros módulos
+    ProdutosRepository, // Exportando o repository também
+  ],
 })
 export class ProdutosModule {}

@@ -1,5 +1,6 @@
 import { Empresa } from '@modules/empresas/entities/empresa-pg.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { VendaProduto } from '@modules/vendas/entities/venda-produto-pg.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 
 @Entity('produtos')
 export class Produto {
@@ -16,5 +17,8 @@ export class Produto {
   @ManyToOne(() => Empresa, empresa => empresa.produtos)
   @JoinColumn({ name: 'empresaId' })
   empresa: Empresa;
+
+  @OneToMany(() => VendaProduto, (vp) => vp.produto)
+  vendasProduto: VendaProduto[];
 
 }

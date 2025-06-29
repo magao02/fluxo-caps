@@ -4,11 +4,14 @@ import { Produto } from '@modules/produtos/entities/produto-pg.entity';
 import { ProdutosModule } from '@modules/produtos/produtos.module';
 import { User } from '@modules/users/entities/user-pg.entity';
 import { UserModule } from '@modules/users/user.module';
+import { VendaProduto } from '@modules/vendas/entities/venda-produto-pg.entity';
+import { Venda } from '@modules/vendas/entities/venda.entity-pg';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { EmpresasModule } from './modules/empresas/empresas.module';
+import { VendasModule } from './modules/vendas/vendas.module';
 
 @Module({
   imports: [
@@ -24,12 +27,13 @@ import { EmpresasModule } from './modules/empresas/empresas.module';
       username: process.env.DB_USER || 'postgres',
       password: process.env.DB_PASSWORD || 'postgres',
       database: process.env.DB_NAME || 'postgres',
-      entities: [Produto, Empresa, User],
+      entities: [Produto, Empresa, User, Venda, VendaProduto],
       synchronize: true,
     }),
     ProdutosModule,
     EmpresasModule,
-    UserModule
+    UserModule,
+    VendasModule
   ],
   controllers: [],
   providers: [],

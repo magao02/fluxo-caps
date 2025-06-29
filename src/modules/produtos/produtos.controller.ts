@@ -11,14 +11,14 @@ export class ProdutosController {
   constructor(private readonly produtosService: ProdutosService) {}
   @Post()
   create(@Body() createProdutoDto: CreateProdutoDto, @Req() req: Request & { user?: { empresaId?: string } }) {
-    const empresaId = '397620d6-68d0-437f-ba01-9eaa1da38e0d' //req.user?.empresaId; // Assuming the user object contains empresaId
+    const empresaId = 'ce16b275-479c-46f4-8228-084ba51038be' //req.user?.empresaId; // Assuming the user object contains empresaId
     return this.produtosService.create(createProdutoDto, empresaId);
   }
   
 
   @Get()
   findAll(@Req() req: Request & { user?: { empresaId?: string } }) {
-    const empresaId = '397620d6-68d0-437f-ba01-9eaa1da38e0d' //req.user?.empresaId;
+    const empresaId = 'ce16b275-479c-46f4-8228-084ba51038be' //req.user?.empresaId;
     return this.produtosService.findAll(empresaId);
   }
 
