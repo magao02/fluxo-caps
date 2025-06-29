@@ -1,8 +1,8 @@
-import { Controller, Get, Query, Req, Res, UnauthorizedException } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Request, Response } from 'express';
 
 import { AuthService } from './auth.service';
+import { LoginDto } from './dto/login.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -11,38 +11,9 @@ export class AuthController {
         private readonly configService: ConfigService,
     ) { }
 
-    @Get('login')
-    async login(@Res() res: Response) {
-        const { url } = this.authService.initiateAuth();
-        return res.redirect(url);
+    @Post('login')
+    async login(@Body() dto: LoginDto,) {
+        return this.authService.login(dto);
     }
 
-    @Get('callback')
-    async callback(
-        @Query('code') code: string,
-        @Query('error') error: string,
-        @Req() req: Request,
-        @Res() res: Response
-    ) {
-        try {
-
-            await this.authService.handleCallback({
-                code,
-                error,
-                session: req.session
-            });
-
-            const CLIENT_URL_REDIRECT = this.configService.get('CLIENT_URL_REDIRECT');
-            return res.redirect(CLIENT_URL_REDIRECT);
-
-        } catch (error) {
-            console.error('Callback error:', error);
-            throw new UnauthorizedException('Authentication failed');
-        }
-    }
-
-    @Get('logout')
-    async logout(@Req() req: Request) {
-        req.session.destroy(() => { })
-    }
 }

@@ -1,4 +1,5 @@
 //import { AuthModule } from '@modules/auth/auth.module';
+import { AuthModule } from '@modules/auth/auth.module';
 import { Empresa } from '@modules/empresas/entities/empresa-pg.entity';
 import { Produto } from '@modules/produtos/entities/produto-pg.entity';
 import { ProdutosModule } from '@modules/produtos/produtos.module';
@@ -33,7 +34,8 @@ import { VendasModule } from './modules/vendas/vendas.module';
     ProdutosModule,
     EmpresasModule,
     UserModule,
-    VendasModule
+    VendasModule,
+    AuthModule
   ],
   controllers: [],
   providers: [],

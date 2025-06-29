@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user-pg.entity';
 import { UsersRepositoryTypeorm } from './repositories/users-pg.repository';
 import { UsersRepository } from './repositories/users.repository';
+import { FinndByEmailUsecase } from './usecases/findByEmail-user.usecase';
 import {
   CreateUserUsecase,
   RemoveUserUsecase,
@@ -30,11 +31,12 @@ import { UsersService } from './users.service';
     RetrieveUserUsecase,
     UpdateUserUsecase,
     RemoveUserUsecase,
-    // FindOneEmpresaUseCase será injetado através do EmpresasModule
+    FinndByEmailUsecase,
     {
       provide: UsersRepository,
       useClass: UsersRepositoryTypeorm,
     }
   ],
+  exports: [FinndByEmailUsecase, UsersRepository],
 })
 export class UserModule { }

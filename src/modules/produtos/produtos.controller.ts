@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
+import { JwtAuthGuard } from '@modules/auth/guards/jwt-auth.guard';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, UseGuards } from '@nestjs/common';
 import { Request } from 'express';
 
 import { CreateProdutoDto } from './dto/create-produto.dto';
@@ -8,10 +9,13 @@ import { ProdutosService } from './produtos.service';
 
 @Controller('produtos')
 export class ProdutosController {
-  constructor(private readonly produtosService: ProdutosService) {}
+  constructor(private readonly produtosService: ProdutosService) { }
+  
+  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createProdutoDto: CreateProdutoDto, @Req() req: Request & { user?: { empresaId?: string } }) {
-    const empresaId = 'ce16b275-479c-46f4-8228-084ba51038be' //req.user?.empresaId; // Assuming the user object contains empresaId
+    console.log(req.user);
+    const empresaId =  req.user?.empresaId;
     return this.produtosService.create(createProdutoDto, empresaId);
   }
   

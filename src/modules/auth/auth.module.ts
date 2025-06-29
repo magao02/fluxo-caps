@@ -1,25 +1,31 @@
+
+import { UserModule } from '@modules/users/user.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { ExchangeTokenUsecase } from './usecases/exchange-token.usecase';
-import { GetUserInfoUsecase } from './usecases/get-user-info.usecase';
-import { InitiateAuthUsecase } from './usecases/initiate-auth.usecase';
-import { ValidateTokenUsecase } from './usecases/validate-token.usecase';
+import { JwtStrategy } from './strategies/jwt.strategy';
+import { LoginUseCase } from './usecases/login.usecase';
+
 
 @Module({
     imports: [
         ConfigModule,
         PassportModule.register({ session: true }),
+        JwtModule.register({
+            secret: 'default',
+            signOptions: { expiresIn: '86400s' },
+        }),
+        UserModule
+        
     ],
     providers: [
         AuthService,
-        InitiateAuthUsecase,
-        ExchangeTokenUsecase,
-        GetUserInfoUsecase,
-        ValidateTokenUsecase,
+        LoginUseCase,
+        JwtStrategy
     ],
     controllers: [AuthController],
     exports: [AuthService],
