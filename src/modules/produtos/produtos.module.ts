@@ -1,3 +1,4 @@
+import { EmpresasModule } from '@modules/empresas/empresas.module';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
@@ -13,7 +14,7 @@ import { FindOneProdutoUseCase } from './usecases/findOne-produto.usecase';
 import { UpdateProdutoUseCase } from './usecases/update-produto.usecase';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Produto])],
+  imports: [TypeOrmModule.forFeature([Produto]),EmpresasModule ],
   controllers: [ProdutosController],
   providers: [ProdutosService,
     {

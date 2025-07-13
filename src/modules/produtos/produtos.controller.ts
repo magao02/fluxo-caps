@@ -14,7 +14,7 @@ export class ProdutosController {
   @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createProdutoDto: CreateProdutoDto, @Req() req: Request & { user?: { empresaId?: string } }) {
-    console.log(req.user);
+    
     const empresaId =  req.user?.empresaId;
     return this.produtosService.create(createProdutoDto, empresaId);
   }
@@ -22,7 +22,7 @@ export class ProdutosController {
 
   @Get()
   findAll(@Req() req: Request & { user?: { empresaId?: string } }) {
-    const empresaId = 'ce16b275-479c-46f4-8228-084ba51038be' //req.user?.empresaId;
+    const empresaId = req.user?.empresaId;
     return this.produtosService.findAll(empresaId);
   }
 

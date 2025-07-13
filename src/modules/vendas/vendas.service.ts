@@ -19,8 +19,7 @@ export class VendasService {
     private readonly removeVendaUseCase: DeleteVendaUseCase,
   ) {}
 
-  create(createVendaDto: CreateVendaDto) {
-    const empresaId = 'ce16b275-479c-46f4-8228-084ba51038be'; // This should ideally come from the request context or user session
+  create(createVendaDto: CreateVendaDto, empresaId: string) {
     return this.createVendaUseCase.execute(createVendaDto, empresaId);
   }
 

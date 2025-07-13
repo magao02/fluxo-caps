@@ -10,13 +10,14 @@ export class VendasController {
   constructor(private readonly vendasService: VendasService) {}
 
   @Post()
-  create(@Body() createVendaDto: CreateVendaDto) {
-    return this.vendasService.create(createVendaDto);
+  create(@Body() createVendaDto: CreateVendaDto, @Req() req: Request & { user?: { empresaId?: string } }) {
+    const empresaId = req.user?.empresaId; // Assuming the user object contains empresaId
+    return this.vendasService.create(createVendaDto, empresaId);
   }
 
   @Get()
   findAll(@Req() req: Request & { user?: { empresaId?: string } }) {
-    const empresaId = 'ce16b275-479c-46f4-8228-084ba51038be' //req.user?.empresaId; // Assuming the user object contains empresaId
+    const empresaId = req.user?.empresaId; // Assuming the user object contains empresaId
     return this.vendasService.findAll(empresaId);
   }
 

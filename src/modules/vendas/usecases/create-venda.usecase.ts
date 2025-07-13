@@ -17,7 +17,6 @@ export class CreateVendaUseCase {
   ) {}
 
   async execute(createVendaDto: CreateVendaDto, empresaId?: string ): Promise<Venda> {
-    console.log(empresaId)
     let empresa: Empresa | null = null;
     empresa = await this.findOneEmpresaUseCase.execute(empresaId);
     if (!empresa) {

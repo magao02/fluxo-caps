@@ -27,9 +27,6 @@ export class LoginUseCase {
 
   async execute(loginDto: LoginDto): Promise<{ access_token: string }> {
     const user = await this.validateUser(loginDto.email, loginDto.password);
-
-    console.log(user.empresa);
-
     const empresaId = user.empresa.id
     const payload = { sub: user.id, email: user.email, empresaId: empresaId };
     const access_token = this.jwtService.sign(payload);
