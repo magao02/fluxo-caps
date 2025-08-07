@@ -24,6 +24,8 @@ export class CreateProdutoUseCase {
     const produto: Produto = {
       ...dto,
       empresa,
+      createdAt: new Date(),
+      updatedAt: new Date(),
       id: crypto.randomUUID(),
     }
     return this.produtosRepo.create(produto);

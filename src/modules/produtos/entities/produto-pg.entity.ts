@@ -13,6 +13,12 @@ export class Produto {
   @Column('decimal')
   price: number;
 
+  @Column()
+  createdAt: Date;
+
+  @Column()
+  updatedAt: Date;
+
 
   @ManyToOne(() => Empresa, empresa => empresa.produtos)
   @JoinColumn({ name: 'empresaId' })

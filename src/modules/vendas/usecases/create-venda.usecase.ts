@@ -24,14 +24,15 @@ export class CreateVendaUseCase {
     }
 
     const products: VendaProduto[] = await Promise.all(
-      createVendaDto.productsDto.map(async (produto) => {
+      createVendaDto.products.map(async (produto) => {
         const produtoEncontrado = await this.findOneProduto.execute(produto.id);
         if (!produtoEncontrado) {
           throw new Error(`Produto com ID ${produto.id} não encontrado`);
         }
         return {
-          quantidade: produto.quantidade,
+          quantidade: produto.quantity,
           produto: produtoEncontrado,
+          price: produto.price,
         };
       })
     );
@@ -40,6 +41,9 @@ export class CreateVendaUseCase {
       ...createVendaDto,
       id: crypto.randomUUID(),
       products,
+      deliveryDate: (typeof createVendaDto.deliveryDate === 'string' && createVendaDto.deliveryDate === '') || createVendaDto.deliveryDate === undefined ? null : createVendaDto.deliveryDate,
+    deliveryAddress: createVendaDto.deliveryAddress === '' || createVendaDto.deliveryAddress === undefined ? null : createVendaDto.deliveryAddress,
+    trackingCode: createVendaDto.trackingCode === '' || createVendaDto.trackingCode === undefined ? null : createVendaDto.trackingCode,
       empresa,
     };
 

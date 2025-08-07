@@ -7,7 +7,9 @@ import { VendasRepository } from '../repositories/vendas.repository';
 
 @Injectable()
 export class UpdateVendaUseCase {
-  constructor(private vendasRepository: VendasRepository) {}
+  constructor(
+    private vendasRepository: VendasRepository
+  ) {}
 
   async execute(id: string, venda: Partial<UpdateVendaDto>): Promise<Venda> {
     const existingVenda = await this.vendasRepository.findOne(id);
@@ -15,7 +17,7 @@ export class UpdateVendaUseCase {
       throw new Error('Venda não encontrada');
     }
 
-    const vendaAtualizada = await this.vendasRepository.update(id, { ...existingVenda, ...venda });
-    return vendaAtualizada
+    const vendaAtualizada = await this.vendasRepository.update(id, { ...existingVenda, ...venda } as any);
+    return vendaAtualizada;
   }
 }
