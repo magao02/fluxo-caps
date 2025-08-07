@@ -5,7 +5,7 @@ import { CreateProdutoDto } from './dto/create-produto.dto';
 import { UpdateProdutoDto } from './dto/update-produto.dto';
 import { CreateProdutoUseCase } from './usecases/create-produto.usecase';
 import { DeleteProdutoUseCase } from './usecases/delete-produto.usecase';
-import { FindAllProdutosUseCase } from './usecases/findAll-Produto.usecase';
+import { FindAllProdutosUseCase } from './usecases/findAll-produto.usecase';
 import { FindOneProdutoUseCase } from './usecases/findOne-produto.usecase';
 import { UpdateProdutoUseCase } from './usecases/update-produto.usecase';
 
