@@ -30,6 +30,7 @@ import { VendasModule } from './modules/vendas/vendas.module';
       database: process.env.DB_NAME || 'postgres',
       entities: [Produto, Empresa, User, Venda, VendaProduto],
       synchronize: true,
+      ssl: true
     }),
     ProdutosModule,
     EmpresasModule,
